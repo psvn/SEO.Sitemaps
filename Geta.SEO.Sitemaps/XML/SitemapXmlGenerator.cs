@@ -19,6 +19,7 @@ using Geta.SEO.Sitemaps.Entities;
 using Geta.SEO.Sitemaps.Repositories;
 using Geta.SEO.Sitemaps.SpecializedProperties;
 using Geta.SEO.Sitemaps.Utils;
+using System.Web.Configuration;
 
 namespace Geta.SEO.Sitemaps.XML
 {
@@ -208,7 +209,7 @@ namespace Geta.SEO.Sitemaps.XML
 
             if (isSpecificLanguage)
             {
-                LanguageSelector languageSelector = !this.SitemapData.EnableLanguageFallback 
+                LanguageSelector languageSelector = !this.SitemapData.EnableLanguageFallback
                     ? new LanguageSelector(this.SitemapData.Language)
                     : LanguageSelector.Fallback(this.SitemapData.Language, false);
 
@@ -253,11 +254,11 @@ namespace Geta.SEO.Sitemaps.XML
             if (cachedObject == null)
             {
                 cachedObject = GetHrefLangData(contentLink);
-                CacheManager.Insert(cacheKey, cachedObject, new CacheEvictionPolicy(null, new [] { "SitemapGenerationKey" }, TimeSpan.FromMinutes(10), CacheTimeoutType.Absolute));
+                CacheManager.Insert(cacheKey, cachedObject, new CacheEvictionPolicy(null, new[] { "SitemapGenerationKey" }, TimeSpan.FromMinutes(10), CacheTimeoutType.Absolute));
             }
 
             return cachedObject;
-        } 
+        }
 
         protected virtual IEnumerable<HrefLangData> GetHrefLangData(ContentReference contentLink)
         {
@@ -322,12 +323,19 @@ namespace Geta.SEO.Sitemaps.XML
 
             var property = contentData.Property[PropertySEOSitemaps.PropertyName] as PropertySEOSitemaps;
 
+            var MMSStatus002 = contentData.Property["MMSStatus002"];
+            string priority = GetPriority(url);
+            if (MMSStatus002 != null && MMSStatus002.Value != null)
+            {
+                priority = Convert.ToInt32(MMSStatus002.Value) >= 80 ? ExpiredPriority : DefaultPriority;
+            }
+
             var element = new XElement(
                 SitemapXmlNamespace + "url",
-                new XElement(SitemapXmlNamespace + "lloc", url),
+                new XElement(SitemapXmlNamespace + "loc", url),
                 new XElement(SitemapXmlNamespace + "lastmod", modified.ToString(DateTimeFormat)),
                 new XElement(SitemapXmlNamespace + "changefreq", (property != null) ? property.ChangeFreq : "weekly"),
-                new XElement(SitemapXmlNamespace + "priority", (property != null) ? property.Priority : GetPriority(url))
+                new XElement(SitemapXmlNamespace + "priority", (property != null) ? property.Priority : priority)
             );
 
             if (this.SitemapData.IncludeAlternateLanguagePages)
@@ -510,6 +518,22 @@ namespace Geta.SEO.Sitemaps.XML
             }
 
             return (bool)cachedObject;
+        }
+
+        private string ExpiredPriority
+        {
+            get
+            {
+                return WebConfigurationManager.AppSettings["ExpiredPriority"] ?? "0.1";
+            }
+        }
+
+        private string DefaultPriority
+        {
+            get
+            {
+                return WebConfigurationManager.AppSettings["DefaultPriority"] ?? "1.0";
+            }
         }
 
         protected HostDefinition GetHostDefinition()
