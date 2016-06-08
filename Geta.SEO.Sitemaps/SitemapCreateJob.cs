@@ -10,11 +10,12 @@ using Geta.SEO.Sitemaps.Entities;
 using Geta.SEO.Sitemaps.Repositories;
 using Geta.SEO.Sitemaps.Utils;
 using Geta.SEO.Sitemaps.XML;
+using EPiServer.BaseLibrary.Scheduling;
 
 namespace Geta.SEO.Sitemaps
 {
     [ScheduledPlugIn(DisplayName = "Generate search engine sitemaps")]
-    public class SitemapCreateJob : ScheduledJobBase
+    public class SitemapCreateJob : JobBase
     {
         private readonly ISitemapRepository _sitemapRepository;
         private readonly SitemapXmlGeneratorFactory _sitemapXmlGeneratorFactory;

@@ -324,7 +324,7 @@ namespace Geta.SEO.Sitemaps.XML
 
             var element = new XElement(
                 SitemapXmlNamespace + "url",
-                new XElement(SitemapXmlNamespace + "loc", url),
+                new XElement(SitemapXmlNamespace + "lloc", url),
                 new XElement(SitemapXmlNamespace + "lastmod", modified.ToString(DateTimeFormat)),
                 new XElement(SitemapXmlNamespace + "changefreq", (property != null) ? property.ChangeFreq : "weekly"),
                 new XElement(SitemapXmlNamespace + "priority", (property != null) ? property.Priority : GetPriority(url))
