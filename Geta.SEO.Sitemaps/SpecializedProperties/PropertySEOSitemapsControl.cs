@@ -21,9 +21,7 @@ namespace Geta.SEO.Sitemaps.SpecializedProperties
         protected TextBox oLoaded;
 
         protected DropDownList priority;
-
-        private readonly string languageRoot = "/propertysearchenginesitemaps/";
-
+    
         public override void ApplyEditChanges()
         {
             var pgs = this.PropertyData as PropertySEOSitemaps;

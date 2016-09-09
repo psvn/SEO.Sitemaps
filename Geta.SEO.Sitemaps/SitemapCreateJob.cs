@@ -15,7 +15,7 @@ using EPiServer.BaseLibrary.Scheduling;
 namespace Geta.SEO.Sitemaps
 {
     [ScheduledPlugIn(DisplayName = "Generate search engine sitemaps")]
-    public class SitemapCreateJob : JobBase
+    public class SitemapCreateJob : ScheduledJobBase
     {
         private readonly ISitemapRepository _sitemapRepository;
         private readonly SitemapXmlGeneratorFactory _sitemapXmlGeneratorFactory;

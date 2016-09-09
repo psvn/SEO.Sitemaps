@@ -7,3 +7,5 @@ packages
 TestResults
 
 *.suo
+*.nuget
+*.vs
