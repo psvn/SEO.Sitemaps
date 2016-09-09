@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: Guid("9f3a4ec0-97a5-47d5-91b2-3e60843d0ff1")]
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.2")]
+[assembly: AssemblyInformationalVersion("2.0.0")]
 [assembly: InternalsVisibleTo("Geta.SEO.Sitemaps.Tests")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
