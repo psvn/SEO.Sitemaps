@@ -2,9 +2,6 @@
 using System.Web.Routing;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
-using EPiServer.ServiceLocation;
-using Geta.SEO.Sitemaps.XML;
-using StructureMap;
 
 namespace Geta.SEO.Sitemaps
 {
